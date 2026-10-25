@@ -2,7 +2,7 @@ const fs = require('fs')
 
 const code = fs.readFileSync('server.js', 'utf8')
 
-if (!code.includes('Hello from Docker')) {
+if (!code.includes('My docker Test')) {
     console.error('FAIL: message not found in server.js');
     process.exit(1);
 
