@@ -1,13 +1,30 @@
 name: CI
 
-on: 
-    push:
-        branches: [main]
+on:
+  push:
+    branches: [main]
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
-            - run: docker build -t hello-app .
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build Docker image
+        run: docker build -t hello-app .
+
+      - name: Smoke test the container
+        run: |
+          docker run -d -p 3000:3000 --name app hello-app
+          sleep 3
+          curl -f http://localhost:3000
