@@ -16,8 +16,7 @@ spec:
     spec:
       containers: 
       - name: hello-app
-        image: ghcr.io/saileegawande/hello-app:eef212d32bc56473f5b724399d9b294a2982ffba
-        ports:
+        image: ghcr.io/saileegawande/hello-app:688f238985d6a28054c4a043a19613b5124199a2
         - containerPort: 3000
         readinessProbe:
           httpGet:
