@@ -1,4 +1,4 @@
-apiversion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hello-app
@@ -6,7 +6,7 @@ metadata:
 spec:
   replicas: 2
   selector:
-    matchlabels:
+    matchLabels:
      app: hello-app
   template:
     metadata:
