@@ -1,0 +1,25 @@
+apiversion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-app
+
+spec:
+  replicas: 2
+  selector:
+    matchlabels:
+     app: hello-app
+  template:
+    metadata:
+      labels:
+       app: hello-app
+    
+    spec:
+      containers: 
+      - name: hello-app
+        image: ghcr.io/saileegawande/hello-app:eef212d32bc56473f5b724399d9b294a2982ffba
+        ports:
+        - containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3000
