@@ -1,4 +1,4 @@
-name: CI practise pipeline
+name: CI/CD practise pipeline
 
 on:
   push:
@@ -42,3 +42,19 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/saileegawande/hello-app:${{ github.sha }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Pull image
+        run: docker pull ghrc.io/saileegawande/hello-app:${{ github.sha}}
+      
+      - name: Run Container
+        run: docker run -d -p 3002:3000 --name app ghrc.io/saileegawande/hello-app:${{github.sha}}
+      
+      - name: Verify it responds
+      run:
+        sleep 5 
+        curl -f htttp://localhost:3002/health
