@@ -50,9 +50,9 @@ jobs:
        - name: Pull image
          run: docker pull ghcr.io/saileegawande/hello-app:${{ github.sha }}
        - name: Run Container
-         run: docker run -d -p 3002:3000 --name app ghrc.io/saileegawande/hello-app:${{github.sha}}
+         run: docker run -d -p 3000:3000 --name app ghrc.io/saileegawande/hello-app:${{github.sha}}
       
        - name: Verify it responds
          run:
           sleep 5 
-          curl -f htttp://localhost:3002/health
+          curl -f htttp://localhost:3000/health
