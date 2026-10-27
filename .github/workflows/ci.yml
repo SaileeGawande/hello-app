@@ -2,7 +2,7 @@ name: CI practise pipeline
 
 on:
   push:
-    branches: [main, practise-cicd]
+    branches: [main, practise-ci]
   pull_request:
     branches: [main]
 
