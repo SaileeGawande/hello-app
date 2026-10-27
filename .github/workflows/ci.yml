@@ -58,4 +58,4 @@ jobs:
        - name: Verify it responds
          run: |
           sleep 5 
-          curl -f htttp://localhost:3000/health
+          curl -f http://localhost:3000/health
