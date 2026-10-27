@@ -40,5 +40,5 @@ jobs:
       with:
         context:
           push: true
-          tags: ghrc.io/saileegawande/hello-app: ${{ github.sha}}
+          tags: ghrc.io/saileegawande/hello-app:${{ github.sha}}
     
