@@ -1,4 +1,4 @@
-name: CI practise pipeline
+name: CI practice pipeline
 
 on:
   push:
