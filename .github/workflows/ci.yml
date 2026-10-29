@@ -62,14 +62,14 @@ jobs:
         run: sed -i "s|COMMIT_ID|${{ github.sha }}|" k8s/deployment.yaml
 
       - name: Deploy to cluster
-        run:
+        run: |
           kubectl apply -f k8s/configmap.yaml
           kubectl apply -f k8s/deployment.yaml
           kubectl apply -f k8s/service.yaml
           kubectl rollout status deployment/hello-app --timeout=120s
 
       - name: Smoke test
-        run:
+        run: |
           kubectl port-forward svc/hello-app 8081:80 &
           sleep 6
           curl -f http://localhost:8081/health
