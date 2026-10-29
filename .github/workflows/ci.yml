@@ -53,7 +53,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Create kind cluster
-        uses: helm/kind-actions@v1
+        uses: helm/kind-action@v1
         
       - name: Create db-secret
         run: kubectl create secret generic db-secret --from-literal=password='${{ secrets.DB_PASSWORD }}'
