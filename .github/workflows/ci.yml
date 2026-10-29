@@ -59,7 +59,7 @@ jobs:
         run: kubectl create secret generic db-secret --from-literal=password='${{ secrets.DB_PASSWORD }}'
       
       - name: Set image tag
-        run: sed -i "s|COMMIT_ID|${{ github.sha }}" k8s/deployment.yaml
+        run: sed -i "s|COMMIT_ID|${{ github.sha }}|" k8s/deployment.yaml
 
       - name: Deploy to cluster
         run:
