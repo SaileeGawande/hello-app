@@ -16,7 +16,7 @@ spec:
     spec:
       containers: 
       - name: hello-app
-        image: ghcr.io/saileegawande/hello-app:688f238985d6a28054c4a043a19613b5124199a2
+        image: ghcr.io/saileegawande/hello-app:COMMIT_ID
         ports:
         - containerPort: 3000
         readinessProbe:
@@ -42,3 +42,10 @@ spec:
             secretKeyRef:
                 name: db-secret
                 key: password
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 128Mi 
