@@ -26,9 +26,6 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Build Docker image
-        run: docker build -t hello-app .
-
       - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
@@ -36,7 +33,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push image
+      - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -56,10 +53,22 @@ jobs:
         uses: helm/kind-action@v1
         
       - name: Create db-secret
-        run: kubectl create secret generic db-secret --from-literal=password='${{ secrets.DB_PASSWORD }}'
+        env:
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD}}
+        run: |
+          test -n "$DB_PASSWORD" || {
+            echo "DB_PASSWORD secret is missing"
+            exit 1
+          }
+          kubectl create secret generic db-secret \ --from-literal=password="$DB_PASSWORD"
+
       
       - name: Set image tag
-        run: sed -i "s|COMMIT_ID|${{ github.sha }}|" k8s/deployment.yaml
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: | 
+          sed -i "s|COMMIT_ID|${IMAGE_TAG }|g" k8s/deployment.yaml
+          grep 'image:' k8s/deployment.yaml
 
       - name: Deploy to cluster
         run: |
