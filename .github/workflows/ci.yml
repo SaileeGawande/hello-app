@@ -50,12 +50,27 @@ jobs:
       contents: read
       packages: write
     steps:
-       - name: Pull image
-         run: docker pull ghcr.io/saileegawande/hello-app:${{ github.sha }}
-       - name: Run Container
-         run: docker run -d -p 3000:3000 --name app ghcr.io/saileegawande/hello-app:${{github.sha}}
+      - uses: actions/checkout@v4
+
+      - name: Create kind cluster
+        uses: helm/kind-actions@v1
+        
+      - name: Create db-secret
+        run: kubectl create secret generic db-secret --from-literal=password='${{ secrets.DB_PASSWORD }}'
       
-       - name: Verify it responds
-         run: |
-          sleep 5 
-          curl -f http://localhost:3000/health
+      - name: Set image tag
+        run: sed -i "s|COMMIT_ID|${{ github.sha }}" k8s/deployment.yaml
+
+      - name: Deploy to cluster
+        run:
+          kubectl apply -f k8s/configmap.yaml
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml
+          kubectl rollout status deployment/hello-app --timeout=120s
+
+      - name: Smoke test
+        run:
+          kubectl port-forward svc/hello-app 8081:80 &
+          sleep 6
+          curl -f http://localhost:8081/health
+
