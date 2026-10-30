@@ -1,0 +1,9 @@
+apiVersion: policy/v1
+kind: PodDistributionBudget
+metadata:
+  name: hello-app
+spec:
+  minAvailable: 1
+  selector:
+    matchlabels:
+      app: hello-app

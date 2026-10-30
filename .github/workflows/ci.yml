@@ -75,6 +75,8 @@ jobs:
           kubectl apply -f k8s/configmap.yaml
           kubectl apply -f k8s/deployment.yaml
           kubectl apply -f k8s/service.yaml
+          kubectl apply -f k8s/hpa.yaml
+          kubectl apply -f k8s/pbd.yaml
           kubectl rollout status deployment/hello-app --timeout=120s
 
       - name: Smoke test
