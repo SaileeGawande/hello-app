@@ -60,7 +60,7 @@ jobs:
             echo "DB_PASSWORD secret is missing"
             exit 1
           }
-          kubectl create secret generic db-secret \ --from-literal=password="$DB_PASSWORD"
+          kubectl create secret generic db-secret --from-literal=password="$DB_PASSWORD"
 
       
       - name: Set image tag
