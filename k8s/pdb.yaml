@@ -5,5 +5,5 @@ metadata:
 spec:
   minAvailable: 1
   selector:
-    matchlabels:
+    matchLabels:
       app: hello-app
