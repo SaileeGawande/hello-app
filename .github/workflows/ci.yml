@@ -67,7 +67,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.sha }}
         run: | 
-          sed -i "s|COMMIT_ID|${IMAGE_TAG }|g" k8s/deployment.yaml
+          sed -i "s|COMMIT_ID|${IMAGE_TAG}|g" k8s/deployment.yaml
           grep 'image:' k8s/deployment.yaml
 
       - name: Deploy to cluster
